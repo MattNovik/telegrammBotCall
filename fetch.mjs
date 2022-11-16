@@ -1,16 +1,29 @@
 import 'isomorphic-fetch';
 import { argv } from 'node:process';
 
-let search_term = argv[2];
+const getRandomArbitrary = (min, max) => {
+  return Math.round(Math.random() * (max - min) + min);
+};
+
+let listWinner = ['winner', 'god-job', 'nice', 'my-love'];
+let listFailure = ['loser', 'failure', 'idiot', 'not-today', 'wrong'];
+let listError = ['error', 'pls-check'];
+let enteredType = argv[2];
+let search_term;
+
+if (enteredType === 'winner') {
+  search_term = listWinner[getRandomArbitrary(0, listWinner.length - 1)];
+} else if (enteredType === 'failure') {
+  search_term = listFailure[getRandomArbitrary(0, listWinner.length - 1)];
+} else {
+  search_term = listError[getRandomArbitrary(0, listWinner.length - 1)];
+}
 let lmt = argv[3];
 let apikey = argv[4];
 let tgAPIKey = argv[5];
 let tgChatId = argv[6];
 let listOfGifs = [];
 let finalGif;
-const getRandomArbitrary = (min, max) => {
-  return Math.round(Math.random() * (max - min) + min);
-};
 
 fetch(
   'https://tenor.googleapis.com/v2/search?q=' +
