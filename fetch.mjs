@@ -5,7 +5,7 @@ const getRandomArbitrary = (min, max) => {
   return Math.round(Math.random() * (max - min) + min);
 };
 
-const sendFetch = (type, tgAPIKey, tgChatId, text) => {
+const sendFetch = (type, tgAPIKey, tgChatId, object) => {
   let typeEvent;
   let typeObject;
   type === 'message'
@@ -23,7 +23,7 @@ const sendFetch = (type, tgAPIKey, tgChatId, text) => {
       '&' +
       typeObject +
       '=' +
-      text,
+      object,
     { method: 'POST' }
   );
 };
