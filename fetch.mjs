@@ -84,14 +84,21 @@ if (stage === 'start') {
     });
 } else if (stage === 'end-text') {
   let projectTitle = argv[3];
-  let projectUrl = argv[4];
-  let branch = argv[5];
-  let commitTitle = argv[6];
-  let userName = argv[7];
-  let tgAPIKey = argv[8];
-  let tgChatId = argv[9];
+  let result = argv[4];
+  let startText = '';
+  if (result === 'good') {
+    startText = '✅ CI: new version was uploaded\nproject: ';
+  } else if (result === 'failure') {
+    startText = '❌ Failure pipeline\nproject: ';
+  }
+  let projectUrl = argv[5];
+  let branch = argv[6];
+  let commitTitle = argv[7];
+  let userName = argv[8];
+  let tgAPIKey = argv[9];
+  let tgChatId = argv[10];
   let text = `${
-    '❌ Failure pipeline\nproject: ' +
+    startText +
     projectTitle +
     '\nURL: ' +
     projectUrl +
