@@ -108,6 +108,20 @@ if (stage === 'start') {
     commitTitle +
     '%0A who started: ' +
     userName;
+  console.log(text);
+  console.log(
+    projectUrl +
+      ' ' +
+      ' ' +
+      branch +
+      ' ' +
+      ' ' +
+      commitTitle +
+      ' ' +
+      tgAPIKey +
+      ' ' +
+      tgChatId
+  );
   fetch(
     'https://api.telegram.org/' +
       tgAPIKey +
