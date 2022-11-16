@@ -85,10 +85,10 @@ if (stage === 'start') {
   let projectTitle = argv[3];
   let result = argv[4];
   let startText = '';
-  if (result === 'good') {
-    startText = '✅ CI: new version was uploaded%0Aproject: ';
-  } else if (result === 'failure') {
-    startText = '❌ Failure pipeline%0Aproject: ';
+  if (result == 'good') {
+    startText = '✅ CI: new version was uploaded %0A project: ';
+  } else if (result == 'failure') {
+    startText = '❌ Failure pipeline %0A project: ';
   }
   let projectUrl = argv[5];
   let branch = argv[6];
@@ -97,15 +97,16 @@ if (stage === 'start') {
   let tgAPIKey = argv[9];
   let tgChatId = argv[10];
   let text =
+    '' +
     startText +
     projectTitle +
-    '%0AURL: ' +
+    '%0A URL: ' +
     projectUrl +
-    '%0Abranch is: ' +
+    '%0A branch is: ' +
     branch +
-    '%0Acommit-title: ' +
+    '%0A commit-title: ' +
     commitTitle +
-    '%0Awho started: ' +
+    '%0A who started: ' +
     userName;
   fetch(
     'https://api.telegram.org/' +
