@@ -1,121 +1,138 @@
 import 'isomorphic-fetch';
 import { argv } from 'node:process';
 
-let listWinner = ['winner', 'god-job', 'nice', 'my-love'];
-let listFailure = ['loser', 'failure', 'idiot', 'not-today', 'wrong'];
-let listError = ['error', 'pls-check'];
-
 const getRandomArbitrary = (min, max) => {
   return Math.round(Math.random() * (max - min) + min);
 };
 
+const sendFetch = (type, tgAPIKey, tgChatId, text) => {
+  let typeEvent;
+  let typeObject;
+  type === 'message'
+    ? ((typeEvent = 'sendMessage'), (typeObject = 'text'))
+    : type === 'animation'
+    ? ((typeEvent = 'sendAnimation'), (typeObject = 'animation'))
+    : null;
+  return fetch(
+    'https://api.telegram.org/' +
+      tgAPIKey +
+      '/' +
+      typeEvent +
+      '?chat_id=' +
+      tgChatId +
+      '&' +
+      typeObject +
+      '=' +
+      text,
+    { method: 'POST' }
+  );
+};
+
+let listWinner = ['winner', 'god-job', 'nice', 'my-love'];
+let listFailure = ['loser', 'failure', 'idiot', 'not-today', 'wrong'];
+let listError = ['error', 'pls-check'];
+
+let result;
+let projectTitle;
+let projectUrl;
+let branch;
+let commitTitle;
+let userName;
+let tgAPIKey;
+let tgChatId;
+let text;
+
+let enteredType;
+let search_term;
+let lmt;
+let apikey;
+
 let stage = argv[2];
 
-if (stage === 'start') {
-  let projectTitle = argv[3];
-  let projectUrl = argv[4];
-  let branch = argv[5];
-  let commitTitle = argv[6];
-  let userName = argv[7];
-  let tgAPIKey = argv[8];
-  let tgChatId = argv[9];
-  let text =
-    '⏩ Start pipeline%0Aproject: ' +
-    projectTitle +
-    '%0AURL: ' +
-    projectUrl +
-    '%0Abranch is: ' +
-    branch +
-    '%0Acommit-title: ' +
-    commitTitle +
-    '%0Awho started: ' +
-    userName;
-  fetch(
-    'https://api.telegram.org/' +
-      tgAPIKey +
-      '/sendMessage?chat_id=' +
-      tgChatId +
-      '&text=' +
-      text,
-    { method: 'POST' }
-  );
-} else if (stage === 'end-gif') {
-  let enteredType = argv[3];
-  let search_term = argv[3];
-  let lmt = argv[4];
-  let apikey = argv[5];
-  let tgAPIKey = argv[6];
-  let tgChatId = argv[7];
-  if (enteredType === 'winner') {
-    search_term = listWinner[getRandomArbitrary(0, listWinner.length - 1)];
-  } else if (enteredType === 'failure') {
-    search_term = listFailure[getRandomArbitrary(0, listWinner.length - 1)];
-  } else {
-    search_term = listError[getRandomArbitrary(0, listWinner.length - 1)];
-  }
+const callFetch = (stage) => {
+  if (stage === 'start' || stage === 'end-text') {
+    if (stage === 'start') {
+      projectTitle = argv[3];
+      projectUrl = argv[4];
+      branch = argv[5];
+      commitTitle = argv[6];
+      userName = argv[7];
+      tgAPIKey = argv[8];
+      tgChatId = argv[9];
+      text =
+        '⏩ Start pipeline%0Aproject: ' +
+        projectTitle +
+        '%0AURL: ' +
+        projectUrl +
+        '%0Abranch is: ' +
+        branch +
+        '%0Acommit-title: ' +
+        commitTitle +
+        '%0Awho started: ' +
+        userName;
+    } else if (stage === 'end-text') {
+      result = argv[3];
+      projectTitle = argv[4];
+      startText = '';
+      result == 'good'
+        ? (startText = '✅ CI: new version was uploaded %0A project: ')
+        : result == 'failure'
+        ? (startText = '❌ Failure pipeline %0A project: ')
+        : null;
+      projectUrl = argv[5];
+      branch = argv[7];
+      commitTitle = argv[6];
+      userName = argv[8];
+      tgAPIKey = argv[9];
+      tgChatId = argv[10];
+      text =
+        '' +
+        startText +
+        projectTitle +
+        '%0A URL: ' +
+        projectUrl +
+        '%0A branch is: ' +
+        branch +
+        '%0A commit-title: ' +
+        commitTitle +
+        '%0A who started: ' +
+        userName;
+    }
+    sendFetch(message, tgAPIKey, tgChatId, text);
+  } else if (stage === 'end-gif') {
+    enteredType = argv[3];
+    search_term = argv[3];
+    lmt = argv[4];
+    apikey = argv[5];
+    tgAPIKey = argv[6];
+    tgChatId = argv[7];
+    enteredType === 'winner'
+      ? (search_term = listWinner[getRandomArbitrary(0, listWinner.length - 1)])
+      : enteredType === 'failure'
+      ? (search_term =
+          listFailure[getRandomArbitrary(0, listWinner.length - 1)])
+      : (search_term = listError[getRandomArbitrary(0, listWinner.length - 1)]);
 
-  let listOfGifs = [];
-  let finalGif;
+    let listOfGifs = [];
+    let finalGif;
 
-  fetch(
-    'https://tenor.googleapis.com/v2/search?q=' +
-      search_term +
-      '&key=' +
-      apikey +
-      '&limit=' +
-      lmt
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      data.results.map((item) => {
-        listOfGifs.push(item.url);
+    fetch(
+      'https://tenor.googleapis.com/v2/search?q=' +
+        search_term +
+        '&key=' +
+        apikey +
+        '&limit=' +
+        lmt
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        data.results.map((item) => {
+          listOfGifs.push(item.url);
+        });
+        finalGif = listOfGifs[getRandomArbitrary(0, listOfGifs.length - 1)];
+        return sendFetch(message, tgAPIKey, tgChatId, finalGif);
       });
-      finalGif = listOfGifs[getRandomArbitrary(0, listOfGifs.length - 1)];
-      return fetch(
-        'https://api.telegram.org/' +
-          tgAPIKey +
-          '/sendAnimation?chat_id=' +
-          tgChatId +
-          '&animation=' +
-          finalGif,
-        { method: 'POST' }
-      );
-    });
-} else if (stage === 'end-text') {
-  let result = argv[3];
-  let projectTitle = argv[4];
-  let startText = '';
-  if (result == 'good') {
-    startText = '✅ CI: new version was uploaded %0A project: ';
-  } else if (result == 'failure') {
-    startText = '❌ Failure pipeline %0A project: ';
   }
-  let projectUrl = argv[5];
-  let branch = argv[7];
-  let commitTitle = argv[6];
-  let userName = argv[8];
-  let tgAPIKey = argv[9];
-  let tgChatId = argv[10];
-  let text =
-    '' +
-    startText +
-    projectTitle +
-    '%0A URL: ' +
-    projectUrl +
-    '%0A branch is: ' +
-    branch +
-    '%0A commit-title: ' +
-    commitTitle +
-    '%0A who started: ' +
-    userName;
-  console.log(argv);
-  fetch(
-    'https://api.telegram.org/' +
-      tgAPIKey +
-      '/sendMessage?chat_id=' +
-      tgChatId +
-      '&text=' +
-      text,
-    { method: 'POST' }
-  );
-}
+};
+
+callFetch(stage);
