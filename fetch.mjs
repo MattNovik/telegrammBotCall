@@ -91,8 +91,8 @@ if (stage === 'start') {
     startText = '❌ Failure pipeline %0A project: ';
   }
   let projectUrl = argv[5];
-  let branch = argv[6];
-  let commitTitle = argv[7];
+  let branch = argv[7];
+  let commitTitle = argv[6];
   let userName = argv[8];
   let tgAPIKey = argv[9];
   let tgChatId = argv[10];
