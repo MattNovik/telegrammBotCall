@@ -71,9 +71,9 @@ const callFetch = (stage) => {
         '%0Awho started: ' +
         userName;
     } else if (stage === 'end-text') {
+      let startText = '';
       result = argv[3];
       projectTitle = argv[4];
-      startText = '';
       result == 'good'
         ? (startText = '✅ CI: new version was uploaded %0A project: ')
         : result == 'failure'
