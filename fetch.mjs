@@ -1,9 +1,9 @@
 import 'isomorphic-fetch';
 import { argv } from 'node:process';
 
-let apikey = argv[4];
 let search_term = argv[2];
 let lmt = argv[3];
+let apikey = argv[4];
 let tgAPIKey = argv[5];
 let tgChatId = argv[6];
 let listOfGifs = [];
@@ -11,6 +11,7 @@ let finalGif;
 const getRandomArbitrary = (min, max) => {
   return Math.round(Math.random() * (max - min) + min);
 };
+
 fetch(
   'https://tenor.googleapis.com/v2/search?q=' +
     search_term +
