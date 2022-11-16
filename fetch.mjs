@@ -4,6 +4,8 @@ import { argv } from 'node:process';
 let apikey = argv[4];
 let search_term = argv[2];
 let lmt = argv[3];
+let tgAPIKey = argv[5];
+let tgChatId = argv[6];
 let listOfGifs = [];
 let finalGif;
 const getRandomArbitrary = (min, max) => {
@@ -24,7 +26,11 @@ fetch(
     });
     finalGif = listOfGifs[getRandomArbitrary(0, listOfGifs.length - 1)];
     return fetch(
-      'https://api.telegram.org/bot5674730604:AAEq34bgTEFtfKuGvRSLN55xkSZHPLFuQPM/sendAnimation?chat_id=-832187211&animation=' +
+      'https://api.telegram.org/' +
+        tgAPIKey +
+        '/sendAnimation?chat_id=' +
+        tgChatId +
+        '&animation=' +
         finalGif,
       { method: 'POST' }
     );
