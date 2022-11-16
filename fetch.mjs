@@ -20,8 +20,6 @@ if (enteredType === 'winner') {
   search_term = listError[getRandomArbitrary(0, listWinner.length - 1)];
 }
 
-console.log(search_term);
-
 let lmt = argv[3];
 let apikey = argv[4];
 let tgAPIKey = argv[5];
