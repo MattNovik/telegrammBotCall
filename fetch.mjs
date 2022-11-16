@@ -82,8 +82,8 @@ if (stage === 'start') {
       );
     });
 } else if (stage === 'end-text') {
-  let projectTitle = argv[3];
-  let result = argv[4];
+  let result = argv[3];
+  let projectTitle = argv[4];
   let startText = '';
   if (result == 'good') {
     startText = '✅ CI: new version was uploaded %0A project: ';
