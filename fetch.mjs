@@ -1,4 +1,5 @@
 import 'isomorphic-fetch';
+import { argv } from 'node:process';
 
 let apikey = 'AIzaSyA-20iNazzzkkd4Zg4PWxHMucpuh5DUDbI';
 let search_term = 'funny';
@@ -8,7 +9,7 @@ let finalGif;
 const getRandomArbitrary = (min, max) => {
   return Math.round(Math.random() * (max - min) + min);
 };
-console.log(process.argv);
+console.log(argv);
 fetch(
   'https://tenor.googleapis.com/v2/search?q=' +
     search_term +
