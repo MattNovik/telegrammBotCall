@@ -98,7 +98,7 @@ const callFetch = (stage) => {
         '%0A who started: ' +
         userName;
     }
-    sendFetch(message, tgAPIKey, tgChatId, text);
+    sendFetch('message', tgAPIKey, tgChatId, text);
   } else if (stage === 'end-gif') {
     enteredType = argv[3];
     search_term = argv[3];
@@ -130,7 +130,7 @@ const callFetch = (stage) => {
           listOfGifs.push(item.url);
         });
         finalGif = listOfGifs[getRandomArbitrary(0, listOfGifs.length - 1)];
-        return sendFetch(message, tgAPIKey, tgChatId, finalGif);
+        return sendFetch('animation', tgAPIKey, tgChatId, finalGif);
       });
   }
 };
