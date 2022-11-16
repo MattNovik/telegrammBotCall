@@ -8,6 +8,7 @@ let finalGif;
 const getRandomArbitrary = (min, max) => {
   return Math.round(Math.random() * (max - min) + min);
 };
+console.log(process.argv);
 fetch(
   'https://tenor.googleapis.com/v2/search?q=' +
     search_term +
