@@ -19,7 +19,7 @@ if (stage === 'start') {
   let userName = argv[7];
   let tgAPIKey = argv[8];
   let tgChatId = argv[9];
-  let text =
+  let text = `${
     '⏩ Start pipeline\nproject: ' +
     projectTitle +
     '\nURL: ' +
@@ -29,7 +29,8 @@ if (stage === 'start') {
     '\ncommit-title: ' +
     commitTitle +
     '\nwho started: ' +
-    userName;
+    userName
+  }`;
   fetch(
     'https://api.telegram.org/' +
       tgAPIKey +
@@ -89,7 +90,7 @@ if (stage === 'start') {
   let userName = argv[7];
   let tgAPIKey = argv[8];
   let tgChatId = argv[9];
-  let text =
+  let text = `${
     '❌ Failure pipeline\nproject: ' +
     projectTitle +
     '\nURL: ' +
@@ -99,7 +100,8 @@ if (stage === 'start') {
     '\ncommit-title: ' +
     commitTitle +
     '\nwho started: ' +
-    userName;
+    userName
+  }`;
   fetch(
     'https://api.telegram.org/' +
       tgAPIKey +
