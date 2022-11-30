@@ -1,4 +1,3 @@
-import 'isomorphic-fetch';
 import { argv } from 'node:process';
 
 const getRandomArbitrary = (min, max) => {
