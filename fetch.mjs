@@ -125,7 +125,8 @@ const callFetch = (stage) => {
     )
       .then((response) => response.json())
       .then((data) => {
-        data.results.map((item) => {
+        console.log(data);
+        data?.results?.map((item) => {
           listOfGifs.push(item.url);
         });
         finalGif = listOfGifs[getRandomArbitrary(0, listOfGifs.length - 1)];
